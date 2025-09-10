@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "attach_b40c6ed0dee34de79a62ea9ef53fcfe1",
+    "task_id": "task_e7d0ee44e3954a6db821ae03d2226195",
+    "user_id": "user_bf76283c46974efcb452535ab9dfddc5",
+    "file_name": "test ",
+    "file_url": "https://docs.google.com/document/d/1gX6yuPcexoxQ2nw24ZINM7C7ikVRaWnlTaZWC4eUfnc/edit?usp=sharing",
+    "file_size_bytes": 0,
+    "mime_type": "",
+    "uploaded_at": "2025-09-10T20:36:42.767210Z"
+  },
+  {
+    "_id": "attach_dc45598fd5324e6a99ffbb05b2553182",
+    "task_id": "task_c8a7120ed7104147b97f059985503d28",
+    "user_id": "user_bf76283c46974efcb452535ab9dfddc5",
+    "file_name": "asx",
+    "file_url": "https://thitruongsi.com/ba-ca-phe-gia-si-so-luong-lon-2230394.html?srsltid=AfmBOopslLfMuir6u_xZkw1HJAbFRQKdo0F4Usi4WemJbTNM-4mrbL-b",
+    "file_size_bytes": 0,
+    "mime_type": "",
+    "uploaded_at": "2025-09-10T21:33:36.681850Z"
+  }
+]
