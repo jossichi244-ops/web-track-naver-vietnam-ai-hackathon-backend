@@ -33,7 +33,7 @@ class UserResponse(BaseModel):
     avatar_url: Optional[str] = None
     created_at: str
     last_login: Optional[str] = None
-    preferences: Preferences
+    preferences: Optional[Preferences] = Preferences()
     profile_summary: ProfileSummary
     user_tasks: Optional[List[dict]] = []
     # Các field skill — giữ lại để tương thích AI/HR layer sau này
