@@ -1,0 +1,28 @@
+[
+  {
+    "_id": "chal_4f071491158b44db9e818a6e3eca433a",
+    "user_id": "user_bf76283c46974efcb452535ab9dfddc5",
+    "wallet_address": "0x98134a54fc5bc8c100ff70fa708a408b898d8672",
+    "shared_at": "2025-09-11T09:29:37.332030Z",
+    "challenge_url": "https://www.facebook.com/share/p/16x45RWgq3/",
+    "title": "NAVER HACKATHON",
+    "description": "CODING ",
+    "tags": [
+      "#CODE",
+      "#FRONTEND",
+      "#HACKATHON"
+    ]
+  },
+  {
+    "_id": "chal_b63fb68afa2e43e4904034719cdd2497",
+    "user_id": "user_bf76283c46974efcb452535ab9dfddc5",
+    "wallet_address": "0x98134a54fc5bc8c100ff70fa708a408b898d8672",
+    "shared_at": "2025-09-11T10:26:44.157412Z",
+    "challenge_url": "https://www.linkedin.com/posts/microsoft_big-ideas-often-start-with-small-teams-and-activity-7371592178927775744-C4I6?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAACkCijUB0P0jcj3MH_IqGAhXhp024fZqDxg",
+    "title": "hackathon",
+    "description": "tham gia chung nh\u00e9",
+    "tags": [
+      "#Code"
+    ]
+  }
+]
