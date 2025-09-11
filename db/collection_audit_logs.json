@@ -528,5 +528,25 @@
     "ip_address": "127.0.0.1",
     "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0",
     "created_at": "2025-09-10T21:53:20.438195Z"
+  },
+  {
+    "_id": "c98505428a7c448d9df124ac2ff681af",
+    "user_id": "user_bf76283c46974efcb452535ab9dfddc5",
+    "wallet_address": "0x98134a54fc5bc8c100ff70fa708a408b898d8672",
+    "action": "create_task",
+    "target_id": "task_b6fc1c9c394f4896ac97b763c50704cd",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0",
+    "created_at": "2025-09-11T16:16:15.017304Z"
+  },
+  {
+    "_id": "a14843ed54c14794bf1830be61bfaba1",
+    "user_id": "user_bf76283c46974efcb452535ab9dfddc5",
+    "wallet_address": "0x98134a54fc5bc8c100ff70fa708a408b898d8672",
+    "action": "create_task",
+    "target_id": "task_962e8ea579fa482f90fe44e6ca5062a0",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0",
+    "created_at": "2025-09-11T16:16:56.725413Z"
   }
 ]

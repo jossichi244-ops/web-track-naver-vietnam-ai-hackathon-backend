@@ -131,33 +131,36 @@ def get_user_groups_and_tasks(wallet_address: str):
     }
 
 def update_user(wallet_address: str, updates: UserUpdateRequest) -> UserResponse:
+    # Tìm user trong cơ sở dữ liệu
     user = users_db.find_one("wallet_address", wallet_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-
-    # Chuyển model Pydantic → dict để xử lý
+    
+    # Chuyển model Pydantic -> dict để dễ xử lý
     update_data = updates.dict(exclude_unset=True)
-
-    # 🔒 KHÔNG CHO PHÉP SỬA CÁC FIELD IMMUTABLE
-    immutable_fields = {"wallet_address", "_id", "created_at", "profile_summary"}
+    
+    # Loại bỏ các trường không hợp lệ từ request (tránh trường immutable)
+    immutable_fields = {"wallet_address", "created_at", "profile_summary", "user_tasks", 
+                        "skill_tag", "proficiency_level", "last_used_at", "verified_by_tasks", "endorsed_by"}
     for field in immutable_fields:
-        update_data.pop(field, None)
+        if field in update_data:
+            del update_data[field]
 
-    # 🔧 XỬ LÝ RIÊNG preferences — merge thay vì ghi đè toàn bộ
-    if "preferences" in update_data:
-        current_prefs = user.get("preferences", {})
-        # Merge an toàn — chỉ cập nhật field được gửi
-        current_prefs.update(update_data["preferences"])
-        update_data["preferences"] = current_prefs
+    # Xử lý preferences nếu có, merge thay vì ghi đè hoàn toàn
+    # if "preferences" in update_data:
+    #     current_prefs = user.get("preferences", {})
+        # current_prefs.update(update_data["preferences"])
+        # update_data["preferences"] = current_prefs
 
-    # Cập nhật last_login khi có thay đổi profile
+    # Cập nhật trường last_login mỗi khi có cập nhật
     if len(update_data) > 0:
         update_data["last_login"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    # Gộp vào user hiện tại
+    
+    # Cập nhật vào user
     user.update(update_data)
 
-    # Lưu lại
+    # Lưu vào DB (hoặc thay thế)
     users_db.insert_or_replace("wallet_address", wallet_address, user)
 
+    # Trả về dữ liệu đã cập nhật dưới dạng response
     return UserResponse(**user)

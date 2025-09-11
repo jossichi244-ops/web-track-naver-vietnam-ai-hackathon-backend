@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from models.user import UserUpdateRequest, UserResponse
 from controllers import user_controller
 
+
 router = APIRouter(prefix="/users", tags=["users"])
 
 @router.get("/{wallet_address}", response_model=UserResponse)

@@ -18,5 +18,15 @@
     "file_size_bytes": 0,
     "mime_type": "",
     "uploaded_at": "2025-09-10T21:33:36.681850Z"
+  },
+  {
+    "_id": "attach_0a0ba6a6fcd74ac4b311a4a5ff8cdbda",
+    "task_id": "task_c8a7120ed7104147b97f059985503d28",
+    "user_id": "user_bf76283c46974efcb452535ab9dfddc5",
+    "file_name": "axs",
+    "file_url": "https://chatgpt.com/c/68c26475-92ac-8320-a50a-366d5a758631",
+    "file_size_bytes": 0,
+    "mime_type": "",
+    "uploaded_at": "2025-09-11T14:57:27.254845Z"
   }
 ]

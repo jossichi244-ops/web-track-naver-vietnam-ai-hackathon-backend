@@ -5,7 +5,9 @@
     "title": "Research Ng\u01b0\u1eddi ti\u00eau d\u00f9ng & H\u00e0nh vi",
     "description": "T\u00ecm hi\u1ec3u th\u00e1i \u0111\u1ed9 c\u1ee7a kh\u00e1ch h\u00e0ng Vi\u1ec7t v\u1edbi s\u1ea3n ph\u1ea9m xanh/t\u00e1i ch\u1ebf.=> th\u1eed \u0111\u01b0a ra insight m\u00ecnh n\u00ean t\u00e2p trung v\u00e0o ph\u00e2n kh\u00fac kh\u00e1ch n\u00e0o? V\u00ec sao? \u01b0u v\u00e0 nh\u01b0\u1ee3c \u0111i\u1ec3m nh\u00f3m cus n\u00e0y? Khu v\u1ef1c n\u00e0o s\u1ebd ch\u1ea1y th\u1eed sp? \n\nThu th\u1eadp insight t\u1eeb blog, c\u1ed9ng \u0111\u1ed3ng online, ph\u1ecfng v\u1ea5n nhanh v\u00e0i c\u00e1 nh\u00e2n/qu\u00e1n c\u00e0 ph\u00ea.\n\nTr\u1ea3 l\u1eddi c\u00e2u h\u1ecfi: Ng\u01b0\u1eddi ti\u00eau d\u00f9ng c\u00f3 quan t\u00e2m kh\u00f4ng? H\u1ecd g\u1eb7p \u201cpain point\u201d g\u00ec trong x\u1eed l\u00fd b\u00e3 c\u00e0 ph\u00ea ho\u1eb7c khi mua s\u1ea3n ph\u1ea9m xanh?\n\nInsight k\u1ef3 v\u1ecdng:\n\n\u0110\u1ed9ng l\u1ef1c s\u1eed d\u1ee5ng s\u1ea3n ph\u1ea9m (ti\u1ec7n l\u1ee3i, an to\u00e0n, th\u00e2n thi\u1ec7n m\u00f4i tr\u01b0\u1eddng).\n\nR\u00e0o c\u1ea3n (gi\u00e1 cao, thi\u1ebfu ni\u1ec1m tin, kh\u00f4ng th\u1ea5y c\u1ea7n thi\u1ebft).",
     "priority": "high",
-    "tags": ["research"],
+    "tags": [
+      "research"
+    ],
     "due_date": "2025-09-14T21:19:00Z",
     "metadata": {
       "estimated_hours": 95.99,
@@ -25,7 +27,9 @@
     "title": "Research something",
     "description": "sjghadsfasdfasdf",
     "priority": "medium",
-    "tags": ["\u00e1d"],
+    "tags": [
+      "\u00e1d"
+    ],
     "due_date": "2025-09-11T21:55:00Z",
     "metadata": {
       "estimated_hours": 0.03,
@@ -38,5 +42,49 @@
     "is_completed": false,
     "completed_at": null,
     "color_code": "#f59e0b"
+  },
+  {
+    "_id": "777966497b064f42936f67475694c916",
+    "task_id": "task_b6fc1c9c394f4896ac97b763c50704cd",
+    "title": "add task",
+    "priority": "high",
+    "tags": [
+      "web",
+      "code"
+    ],
+    "due_date": "2025-09-12T16:15:00Z",
+    "metadata": {
+      "estimated_hours": 23.99,
+      "required_skills": []
+    },
+    "group_id": "grp_4d8767bdf8d842d98003157453eb3abe",
+    "status": "pending",
+    "created_at": "2025-09-11T16:16:14.952666Z",
+    "updated_at": "2025-09-11T16:16:14.952666Z",
+    "is_completed": false,
+    "completed_at": null,
+    "color_code": "#ef4444"
+  },
+  {
+    "_id": "50cc229613834d918f8363187278a439",
+    "task_id": "task_962e8ea579fa482f90fe44e6ca5062a0",
+    "title": "add task",
+    "description": "T\u00ecm hi\u1ec3u th\u00e1i \u0111\u1ed9 c\u1ee7a kh\u00e1ch h\u00e0ng Vi\u1ec7t v\u1edbi s\u1ea3n ph\u1ea9m xanh/t\u00e1i ch\u1ebf.=> th\u1eed \u0111\u01b0a ra insight m\u00ecnh n\u00ean t\u00e2p trung v\u00e0o ph\u00e2n kh\u00fac kh\u00e1ch n\u00e0o? V\u00ec sao? \u01b0u v\u00e0 nh\u01b0\u1ee3c \u0111i\u1ec3m nh\u00f3m cus n\u00e0y? Khu v\u1ef1c n\u00e0o s\u1ebd ch\u1ea1y th\u1eed sp? \n\nThu th\u1eadp insight t\u1eeb blog, c\u1ed9ng \u0111\u1ed3ng online, ph\u1ecfng v\u1ea5n nhanh v\u00e0i c\u00e1 nh\u00e2n/qu\u00e1n c\u00e0 ph\u00ea.\n\nTr\u1ea3 l\u1eddi c\u00e2u h\u1ecfi: Ng\u01b0\u1eddi ti\u00eau d\u00f9ng c\u00f3 quan t\u00e2m kh\u00f4ng? H\u1ecd g\u1eb7p \u201cpain point\u201d g\u00ec trong x\u1eed l\u00fd b\u00e3 c\u00e0 ph\u00ea ho\u1eb7c khi mua s\u1ea3n ph\u1ea9m xanh?\n\nInsight k\u1ef3 v\u1ecdng:\n\n\u0110\u1ed9ng l\u1ef1c s\u1eed d\u1ee5ng s\u1ea3n ph\u1ea9m (ti\u1ec7n l\u1ee3i, an to\u00e0n, th\u00e2n thi\u1ec7n m\u00f4i tr\u01b0\u1eddng).\n\nR\u00e0o c\u1ea3n (gi\u00e1 cao, thi\u1ebfu ni\u1ec1m tin, kh\u00f4ng th\u1ea5y c\u1ea7n thi\u1ebft).",
+    "priority": "high",
+    "tags": [
+      "research"
+    ],
+    "due_date": "2025-09-12T16:16:00Z",
+    "metadata": {
+      "estimated_hours": 23.99,
+      "required_skills": []
+    },
+    "group_id": "grp_4d8767bdf8d842d98003157453eb3abe",
+    "status": "pending",
+    "created_at": "2025-09-11T16:16:56.693952Z",
+    "updated_at": "2025-09-11T16:16:56.693952Z",
+    "is_completed": false,
+    "completed_at": null,
+    "color_code": "#ef4444"
   }
 ]
