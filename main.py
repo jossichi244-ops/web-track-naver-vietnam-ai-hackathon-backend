@@ -15,8 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Healthcheck route
-@app.get("/")
+@app.get("/", include_in_schema=False)
+@app.head("/", include_in_schema=False)
 def root():
     return {"message": "API is running 🚀"}
 
@@ -28,3 +28,4 @@ app.include_router(group_member_routes.router)
 app.include_router(task_comment_routes.router)
 
 app.include_router(attachment_verification_rouytes.router)
+
