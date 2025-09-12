@@ -16,7 +16,7 @@ class ProfileSummary(BaseModel):
     in_progress_tasks: int = 0
     pending_tasks: int = 0
     productivity_score: float = Field(0.0, ge=0.0, le=100.0)
-    last_updated_summary: str  
+    last_updated_summary: str = Field(default_factory=lambda: datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"))
 
 class UserUpdateRequest(BaseModel):
     display_name: Optional[str] = Field(None, max_length=50)
@@ -30,11 +30,12 @@ class UserUpdateRequest(BaseModel):
         None, description="morning | afternoon | evening | night"
     )
     academic_goals: Optional[List[str]] = None
+    profile_summary: Optional[str] = None
     class Config:
         extra = "forbid"  
 
 class UserResponse(BaseModel):
-    _id: str
+    # _id: str
     wallet_address: str
     display_name: Optional[str] = None
     avatar_url: Optional[str] = None

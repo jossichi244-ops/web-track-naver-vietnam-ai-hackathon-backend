@@ -2,8 +2,8 @@
 from fastapi import HTTPException
 from utils.jsondb import JsonDB
 from datetime import datetime
-from models.user import UserUpdateRequest, UserResponse
-
+from models.user import ProfileSummary, UserUpdateRequest, UserResponse
+from typing import List
 users_db = JsonDB("db/collection_users.json")
 groups_db = JsonDB("db/collection_groups.json")
 group_members_db = JsonDB("db/collection_group_members.json")
@@ -131,36 +131,71 @@ def get_user_groups_and_tasks(wallet_address: str):
     }
 
 def update_user(wallet_address: str, updates: UserUpdateRequest) -> UserResponse:
-    # Tìm user trong cơ sở dữ liệu
+    # Find user in the database
     user = users_db.find_one("wallet_address", wallet_address)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    # Chuyển model Pydantic -> dict để dễ xử lý
+    # Convert Pydantic model to dict, excluding unset fields
     update_data = updates.dict(exclude_unset=True)
     
-    # Loại bỏ các trường không hợp lệ từ request (tránh trường immutable)
-    immutable_fields = {"wallet_address", "created_at", "profile_summary", "user_tasks", 
-                        "skill_tag", "proficiency_level", "last_used_at", "verified_by_tasks", "endorsed_by"}
+    # List of fields that are immutable and should not be updated
+    immutable_fields = {
+        "wallet_address", "created_at", "profile_summary", "user_tasks", 
+        "proficiency_level", "last_used_at", "verified_by_tasks", "endorsed_by"
+    }
+    
+    # Remove any immutable fields from the update request
     for field in immutable_fields:
         if field in update_data:
             del update_data[field]
-
-    # Xử lý preferences nếu có, merge thay vì ghi đè hoàn toàn
-    # if "preferences" in update_data:
-    #     current_prefs = user.get("preferences", {})
-        # current_prefs.update(update_data["preferences"])
-        # update_data["preferences"] = current_prefs
-
-    # Cập nhật trường last_login mỗi khi có cập nhật
+    
+    # Optionally, update preferences if provided
+    if "preferences" in update_data:
+        current_prefs = user.get("preferences", {})
+        current_prefs.update(update_data["preferences"])
+        update_data["preferences"] = current_prefs
+    
+    # Set the last login time if there's an update
     if len(update_data) > 0:
         update_data["last_login"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
     
-    # Cập nhật vào user
+    # Apply the update to the user
     user.update(update_data)
-
-    # Lưu vào DB (hoặc thay thế)
+    
+    # Ensure profile_summary exists before creating UserResponse
+    if "profile_summary" not in user:
+        user["profile_summary"] = ProfileSummary(
+            total_tasks=0,
+            completed_tasks=0,
+            in_progress_tasks=0,
+            pending_tasks=0,
+            productivity_score=0.0,
+            last_updated_summary=datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        ).dict()
+    
+    # Save the updated user back into the DB
     users_db.insert_or_replace("wallet_address", wallet_address, user)
-
-    # Trả về dữ liệu đã cập nhật dưới dạng response
+    
     return UserResponse(**user)
+
+def get_all_users() -> List[UserResponse]:
+    users = users_db.find_all()
+    result = []
+
+    for user in users:
+        wallet_address = user.get("wallet_address")
+        if not wallet_address:
+            continue
+
+        # Tính summary + groups + tasks cho từng user
+        summary, groups_info, all_tasks = calculate_profile_summary(wallet_address)
+
+        user["profile_summary"] = summary
+        user["groups_overview"] = groups_info
+        user["total_group_tasks"] = summary["total_tasks"]
+        user["user_tasks"] = all_tasks
+
+        result.append(UserResponse(**user))
+
+    return result

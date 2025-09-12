@@ -8,11 +8,11 @@
     "created_at": "2025-09-11T15:11:26.060035Z"
   },
   {
-    "_id": "chal_a3b6e7825ef54ff38cf7338413fe2e42",
+    "_id": "chal_962d44aae4d04dd198a78c13efa322e7",
     "wallet_address": "0x98134a54fc5bc8c100ff70fa708a408b898d8672",
-    "challenge": "nonce_d022097a4a0f806fd1a7b8ce",
-    "expires_at": "2025-09-11T16:53:47.971639Z",
+    "challenge": "nonce_28fe9e375935cb3264dfcf6f",
+    "expires_at": "2025-09-12T07:09:01.448022Z",
     "used": true,
-    "created_at": "2025-09-11T16:48:47.973648Z"
+    "created_at": "2025-09-12T07:04:01.449031Z"
   }
 ]

@@ -22,28 +22,6 @@
     "color_code": "#ef4444"
   },
   {
-    "_id": "bb1b8512e0c14c58b6a0c9c8e1ef891e",
-    "task_id": "task_ae8c78f38dc346cda0a897f42571a663",
-    "title": "Research something",
-    "description": "sjghadsfasdfasdf",
-    "priority": "medium",
-    "tags": [
-      "\u00e1d"
-    ],
-    "due_date": "2025-09-11T21:55:00Z",
-    "metadata": {
-      "estimated_hours": 0.03,
-      "required_skills": []
-    },
-    "group_id": "grp_5bed1ac7919c41c7a6f1e03d860cb3db",
-    "status": "pending",
-    "created_at": "2025-09-11T21:53:20.421032Z",
-    "updated_at": "2025-09-11T21:53:20.421032Z",
-    "is_completed": false,
-    "completed_at": null,
-    "color_code": "#f59e0b"
-  },
-  {
     "_id": "777966497b064f42936f67475694c916",
     "task_id": "task_b6fc1c9c394f4896ac97b763c50704cd",
     "title": "add task",

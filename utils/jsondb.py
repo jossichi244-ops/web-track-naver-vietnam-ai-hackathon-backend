@@ -36,3 +36,6 @@ class JsonDB:
             if doc.get(key) == value:
                 return doc
         return None
+    def find_all(self) -> List[Dict[str, Any]]:
+        """Find all records in the JSON database."""
+        return self.read_all()

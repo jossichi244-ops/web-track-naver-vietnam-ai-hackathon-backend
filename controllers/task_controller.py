@@ -165,7 +165,7 @@ def add_verification(task_id: str, user: dict, message: str, signature: str, tx_
     return verification
 
 def update_task(task_id: str, updates: TaskUpdate, request: Request, user: dict):
-    updates_dict = updates.dict(exclude_unset=True)
+    updates_dict = updates
 
     task = tasks_db.find_one("task_id", task_id)
     if not task:
