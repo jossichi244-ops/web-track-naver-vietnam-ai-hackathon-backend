@@ -4,12 +4,12 @@ from datetime import datetime
 
 class TaskMetadata(BaseModel):
     estimated_hours: Optional[float]
-    actual_hours: Optional[float] = None          # default = None -> optional
+    actual_hours: Optional[float] = None         
     complexity_level: Optional[int] = Field(None, ge=1, le=5)
     required_skills: List[str]
-    reviewer_wallet: Optional[str] = None         # optional
+    reviewer_wallet: Optional[str] = None        
     quality_rating: Optional[int] = Field(None, ge=1, le=5)
-    feedback: Optional[str] = None                 # optional
+    feedback: Optional[str] = None                
     contribution_weight: Optional[float] = Field(None, ge=0, le=1)
     times_edited: Optional[int] = 0
     verification_rejected_count: Optional[int] = 0
@@ -45,7 +45,7 @@ class TaskResponse(BaseModel):
     _id: str
     task_id: str
     title: str
-    description: Optional[str]
+    description: Optional[str] = None
     status: str
     priority: str
     tags: List[str]

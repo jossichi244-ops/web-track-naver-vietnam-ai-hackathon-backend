@@ -64,5 +64,73 @@
     "is_completed": false,
     "completed_at": null,
     "color_code": "#ef4444"
+  },
+  {
+    "_id": "ad6b51ef3bed475bae3c839f5b35b54a",
+    "task_id": "task_b462e5b8f0a148f8b99c4a7ff37f01a2",
+    "title": "add task",
+    "priority": "high",
+    "tags": [
+      "research"
+    ],
+    "due_date": "2025-09-21T07:20:00Z",
+    "metadata": {
+      "estimated_hours": 215.99,
+      "required_skills": []
+    },
+    "group_id": "grp_4d8767bdf8d842d98003157453eb3abe",
+    "status": "pending",
+    "created_at": "2025-09-12T07:20:32.758801Z",
+    "updated_at": "2025-09-12T07:20:32.758801Z",
+    "is_completed": false,
+    "completed_at": null,
+    "color_code": "#ef4444"
+  },
+  {
+    "_id": "fbc6832cec0d4d0280fd3f9065000a30",
+    "task_id": "task_b3de89494f7143dc9f209e833a28ad79",
+    "title": "add task",
+    "priority": "high",
+    "tags": [
+      "research"
+    ],
+    "due_date": "2025-09-21T07:20:00Z",
+    "metadata": {
+      "estimated_hours": 215.99,
+      "required_skills": [
+        "CI/CD"
+      ]
+    },
+    "group_id": "grp_4d8767bdf8d842d98003157453eb3abe",
+    "status": "pending",
+    "created_at": "2025-09-12T07:20:46.527254Z",
+    "updated_at": "2025-09-12T07:20:46.527254Z",
+    "is_completed": false,
+    "completed_at": null,
+    "color_code": "#ef4444"
+  },
+  {
+    "_id": "25984c8f982e4a9dbc975f9225b452a8",
+    "task_id": "task_a6b4dcca549d45c1ade8dbe4f29dc69b",
+    "title": "add task",
+    "description": "abc",
+    "priority": "high",
+    "tags": [
+      "research"
+    ],
+    "due_date": "2025-09-21T07:20:00Z",
+    "metadata": {
+      "estimated_hours": 215.99,
+      "required_skills": [
+        "CI/CD"
+      ]
+    },
+    "group_id": "grp_4d8767bdf8d842d98003157453eb3abe",
+    "status": "pending",
+    "created_at": "2025-09-12T07:20:52.560450Z",
+    "updated_at": "2025-09-12T07:20:52.560450Z",
+    "is_completed": false,
+    "completed_at": null,
+    "color_code": "#ef4444"
   }
 ]

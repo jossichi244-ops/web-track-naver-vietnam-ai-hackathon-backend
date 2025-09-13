@@ -3,13 +3,13 @@ from datetime import datetime
 from fastapi import HTTPException, Request
 from utils.jsondb import JsonDB
 from models.task import TaskCreate, TaskUpdate
-
+import json
 tasks_db = JsonDB("db/collection_tasks.json")
 audit_logs_db = JsonDB("db/collection_audit_logs.json")
 group_members_db = JsonDB("db/collection_group_members.json")
 task_attachments_db = JsonDB("db/collection_task_attachments.json")
 task_verifications_db = JsonDB("db/collection_task_verifications.json")
-
+users_db = JsonDB("db/collection_users.json")
 
 def _format_datetime(dt: datetime) -> str:
     if dt.tzinfo is None:
@@ -105,12 +105,12 @@ def list_tasks(wallet_address: str | None = None, user_id: str | None = None, gr
     return tasks
 
 def list_attachments(task_id: str, user: dict):
-    # kiểm tra task có tồn tại không
+    # Check if the task exists
     task = tasks_db.find_one("task_id", task_id)
     if not task:
         raise HTTPException(404, "Task not found")
 
-    # Quyền xem: nếu là group thì user phải là thành viên
+    # Check permission
     if task.get("group_id"):
         members = group_members_db.read_all()
         member = next(
@@ -119,15 +119,44 @@ def list_attachments(task_id: str, user: dict):
         )
         if not member:
             raise HTTPException(403, "Not a member of this group")
-
     else:
-        # Task cá nhân thì chỉ chủ sở hữu được xem
         if task.get("user_id") != user["user_id"]:
             raise HTTPException(403, "Unauthorized")
 
+    # Get all attachments for the task
     attachments = [a for a in task_attachments_db.read_all() if a["task_id"] == task_id]
-    return attachments
 
+    # Populate each attachment with the user information
+    for a in attachments:
+        
+        uploader = users_db.find_one("_id", a.get("user_id"))  # Find the user by user_id
+        
+        if uploader:
+            a["user"] = {
+                "_id": uploader.get("_id"),
+                "wallet_address": uploader.get("wallet_address"),
+                "display_name": uploader.get("display_name"),
+                "avatar_url": uploader.get("avatar_url"),
+                "created_at": uploader.get("created_at"),
+                "last_login": uploader.get("last_login"),
+                "preferences": uploader.get("preferences"),
+                "profile_summary": uploader.get("profile_summary"),
+                "major": uploader.get("major"),
+                "year": uploader.get("year"),
+                "typical_week_schedule": uploader.get("typical_week_schedule"),
+                "skill_tag": uploader.get("skill_tag"),
+                "preferred_study_time": uploader.get("preferred_study_time"),
+                "academic_goals": uploader.get("academic_goals"),
+                "last_used_at": uploader.get("last_used_at"),
+                "verified_by_tasks": uploader.get("verified_by_tasks"),
+                "endorsed_by": uploader.get("endorsed_by"),
+                "user_tasks": uploader.get("user_tasks"),
+                "groups_overview": uploader.get("groups_overview"),
+            }
+        else:
+            a["user"] = None  # If no user is found, set as None  
+
+    return attachments
 
 def add_attachment(task_id: str, user: dict, file_name: str, file_url: str, file_size_bytes: int = 0, mime_type: str = ""):
     now = _format_datetime(datetime.utcnow())
@@ -236,7 +265,6 @@ def delete_task(task_id: str, request: Request, user: dict):
     log_action(request, user["user_id"], user["wallet_address"], "delete_task", task_id)
 
     return {"status": "deleted", "task_id": task_id}
-
 
 def log_action(request: Request, user_id: str, wallet_address: str, action: str, target_id: str | None = None):
     ip_address = request.client.host if request.client else "unknown"

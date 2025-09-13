@@ -19,7 +19,7 @@ class TaskAttachmentResponse(BaseModel):
     file_size_bytes: int
     mime_type: Optional[str]
     uploaded_at: datetime
-
+    user: Optional[dict]
 
 class TaskVerificationCreate(BaseModel):
     message: str = Field(..., description="Message được ký: 'I completed task {task_id} at {timestamp}'")
