@@ -13,6 +13,7 @@ app.add_middleware(
         "https://2244jlsh-5173.asse.devtunnels.ms",
         "https://naver-hackathon-jossichi.netlify.app",
         "https://web-track-naver-vietnam-ai-hackathon-jossichi-niev4dv6d.vercel.app",
+        "https://web-track-naver-vietnam-ai-hackathon-jossichi-abzi4b8bc.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -47,4 +48,5 @@ app.include_router(task_comment_routes.router)
 
 app.include_router(attachment_verification_rouytes.router)
 app.include_router(community_challenge.router)
+
 
