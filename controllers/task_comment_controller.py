@@ -1,12 +1,13 @@
 import uuid
 from datetime import datetime
 from fastapi import HTTPException, Request
-from utils.jsondb import JsonDB
 from config.database import get_collection
+
 tasks_db = get_collection("collection_tasks")
 comments_db = get_collection("collection_task_comments")
 group_members_db = get_collection("collection_group_members")
 audit_logs_db = get_collection("collection_audit_logs")
+
 
 def _format_datetime(dt: datetime) -> str:
     if dt.tzinfo is None:
@@ -15,12 +16,13 @@ def _format_datetime(dt: datetime) -> str:
         return dt.isoformat().replace("+00:00", "Z")
 
 
-def log_action(request: Request, user_id: str, wallet_address: str, action: str, target_id: str | None = None):
+async def log_action(request: Request, user_id: str, wallet_address: str,
+                     action: str, target_id: str | None = None):
+
     ip_address = request.client.host if request.client else "unknown"
     user_agent = request.headers.get("user-agent", "unknown")
 
-    logs = audit_logs_db.read_all()
-    logs.append({
+    log_doc = {
         "_id": uuid.uuid4().hex,
         "user_id": user_id,
         "wallet_address": wallet_address,
@@ -29,25 +31,29 @@ def log_action(request: Request, user_id: str, wallet_address: str, action: str,
         "ip_address": ip_address,
         "user_agent": user_agent,
         "created_at": _format_datetime(datetime.utcnow())
-    })
-    audit_logs_db.write_all(logs)
+    }
+
+    await audit_logs_db.insert_one(log_doc)
 
 
-def create_comment(data: dict, request: Request, user: dict):
-    """Tạo comment trong task (chỉ member group hoặc chủ task cá nhân mới có quyền)."""
-    task = tasks_db.find_one("task_id", data.get("task_id"))
+# =========================================
+# 🔵 CREATE COMMENT
+# =========================================
+
+async def create_comment(data: dict, request: Request, user: dict):
+    task = await tasks_db.find_one({"task_id": data.get("task_id")})
     if not task:
         raise HTTPException(404, "Task not found")
 
     # Nếu là group task
     if task.get("group_id"):
-        members = group_members_db.read_all()
-        member = next(
-            (m for m in members if m["wallet_address"] == user["wallet_address"] and m["group_id"] == task["group_id"]),
-            None
-        )
+        member = await group_members_db.find_one({
+            "wallet_address": user["wallet_address"],
+            "group_id": task["group_id"]
+        })
         if not member:
             raise HTTPException(403, "Not a member of this group")
+
     else:
         # Personal task → chỉ chính chủ mới được comment
         if task.get("user_id") != user["user_id"]:
@@ -55,6 +61,7 @@ def create_comment(data: dict, request: Request, user: dict):
 
     comment_id = f"cmt_{uuid.uuid4().hex}"
     now = _format_datetime(datetime.utcnow())
+
     comment = {
         "_id": comment_id,
         "task_id": task["task_id"],
@@ -67,75 +74,91 @@ def create_comment(data: dict, request: Request, user: dict):
         "is_edited": False
     }
 
-    comments_db.insert_or_replace("_id", comment_id, comment)
-    log_action(request, user["user_id"], user["wallet_address"], "create_comment", comment_id)
+    await comments_db.insert_one(comment)
+    await log_action(request, user["user_id"], user["wallet_address"], "create_comment", comment_id)
 
     return comment
 
 
-def list_comments(task_id: str):
-    """Trả về danh sách comment theo task_id (mới nhất trước)."""
-    comments = comments_db.read_all()
-    return sorted([c for c in comments if c["task_id"] == task_id],
-                  key=lambda x: x["created_at"], reverse=True)
+# =========================================
+# 🔵 LIST COMMENTS
+# =========================================
+
+async def list_comments(task_id: str):
+    comments = await comments_db.find({"task_id": task_id}).to_list(None)
+    return sorted(comments, key=lambda x: x["created_at"], reverse=True)
 
 
-def get_comment(comment_id: str):
-    comment = comments_db.find_one("_id", comment_id)
+# =========================================
+# 🔵 GET COMMENT
+# =========================================
+
+async def get_comment(comment_id: str):
+    comment = await comments_db.find_one({"_id": comment_id})
     if not comment:
         raise HTTPException(404, "Comment not found")
     return comment
 
 
-def update_comment(comment_id: str, updates: dict, request: Request, user: dict):
-    comment = comments_db.find_one("_id", comment_id)
+# =========================================
+# 🔵 UPDATE COMMENT
+# =========================================
+
+async def update_comment(comment_id: str, updates: dict, request: Request, user: dict):
+    comment = await comments_db.find_one({"_id": comment_id})
     if not comment:
         raise HTTPException(404, "Comment not found")
 
     if comment["user_id"] != user["user_id"]:
         raise HTTPException(403, "Only author can edit comment")
 
-    comment.update({
+    new_data = {
         "content": updates.get("content", comment["content"]),
         "updated_at": _format_datetime(datetime.utcnow()),
-        "is_edited": True
-    })
+        "is_edited": True,
+    }
 
-    comments_db.insert_or_replace("_id", comment_id, comment)
-    log_action(request, user["user_id"], user["wallet_address"], "update_comment", comment_id)
+    await comments_db.update_one({"_id": comment_id}, {"$set": new_data})
+    updated_comment = await comments_db.find_one({"_id": comment_id})
 
-    return comment
+    await log_action(request, user["user_id"], user["wallet_address"], "update_comment", comment_id)
+
+    return updated_comment
 
 
-def delete_comment(comment_id: str, request: Request, user: dict):
-    comments = comments_db.read_all()
-    comment = next((c for c in comments if c["_id"] == comment_id), None)
+# =========================================
+# 🔵 DELETE COMMENT
+# =========================================
+
+async def delete_comment(comment_id: str, request: Request, user: dict):
+    comment = await comments_db.find_one({"_id": comment_id})
     if not comment:
         raise HTTPException(404, "Comment not found")
 
-    task = tasks_db.find_one("task_id", comment["task_id"])
+    task = await tasks_db.find_one({"task_id": comment["task_id"]})
     if not task:
         raise HTTPException(404, "Task not found")
 
     # Quyền xoá: chính chủ hoặc group owner
     can_delete = False
+
     if comment["user_id"] == user["user_id"]:
         can_delete = True
+
     elif task.get("group_id"):
-        members = group_members_db.read_all()
-        member = next(
-            (m for m in members if m["wallet_address"] == user["wallet_address"] and m["group_id"] == task["group_id"]),
-            None
-        )
-        if member and member["role"] == "owner":
+        member = await group_members_db.find_one({
+            "wallet_address": user["wallet_address"],
+            "group_id": task["group_id"]
+        })
+
+        if member and member.get("role") == "owner":
             can_delete = True
 
     if not can_delete:
         raise HTTPException(403, "You don't have permission to delete this comment")
 
-    filtered = [c for c in comments if c["_id"] != comment_id]
-    comments_db.write_all(filtered)
+    await comments_db.delete_one({"_id": comment_id})
 
-    log_action(request, user["user_id"], user["wallet_address"], "delete_comment", comment_id)
+    await log_action(request, user["user_id"], user["wallet_address"], "delete_comment", comment_id)
 
     return {"status": "deleted", "comment_id": comment_id}
