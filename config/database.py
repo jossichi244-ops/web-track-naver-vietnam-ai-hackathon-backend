@@ -16,7 +16,8 @@ if not MONGODB_DB_NAME:
 # Tạo client Motor
 client = AsyncIOMotorClient(
     MONGODB_URI,
-    uuidRepresentation="standard"
+    tls=True,
+    tlsAllowInvalidCertificates=False
 )
 
 # Chọn DB
