@@ -12,6 +12,10 @@ web3==6.10.0
 python-jose[cryptography]==3.3.0
 
 python-dateutil==2.9.0.post0
+PYTHON_VERSION=3.11
+fastapi-cors==0.1.4
+dnspython==2.5.0
+beanie==1.22.1
 
 motor==3.4.0  
 python-dotenv==1.0.1
