@@ -3,8 +3,8 @@ from datetime import datetime
 from fastapi import HTTPException
 from typing import Optional, List
 from utils.jsondb import JsonDB
-
-challenges_db = JsonDB("db/collection_community_challenges.json")
+from config.database import get_collection
+challenges_db = get_collection("collection_community_challenges")
 
 
 def _format_datetime(dt: datetime) -> str:

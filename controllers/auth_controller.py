@@ -5,9 +5,11 @@ from utils.jsondb import JsonDB
 from utils.crypto import verify_signature
 from utils.jwt import create_access_token
 import logging
+from config.database import get_collection
+
 logger = logging.getLogger(__name__)
-auth_db = JsonDB("db/collection_auth_challenges.json")
-users_db = JsonDB("db/collection_users.json")
+auth_db = get_collection("collection_auth_challenges")
+users_db = get_collection("collection_users")
 
 def create_challenge(wallet_address: str):
     logger.info(f"Creating challenge for wallet={wallet_address}")

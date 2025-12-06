@@ -4,12 +4,13 @@ from fastapi import HTTPException, Request
 from utils.jsondb import JsonDB
 from models.task import TaskCreate, TaskUpdate
 import json
-tasks_db = JsonDB("db/collection_tasks.json")
-audit_logs_db = JsonDB("db/collection_audit_logs.json")
-group_members_db = JsonDB("db/collection_group_members.json")
-task_attachments_db = JsonDB("db/collection_task_attachments.json")
-task_verifications_db = JsonDB("db/collection_task_verifications.json")
-users_db = JsonDB("db/collection_users.json")
+from config.database import get_collection
+tasks_db = get_collection("collection_tasks")
+audit_logs_db = get_collection("collection_audit_logs")
+group_members_db = get_collection("collection_group_members")
+task_attachments_db = get_collection("collection_task_attachments")
+task_verifications_db = get_collection("collection_task_verifications")
+users_db = get_collection("collection_users")
 
 def _format_datetime(dt: datetime) -> str:
     if dt.tzinfo is None:

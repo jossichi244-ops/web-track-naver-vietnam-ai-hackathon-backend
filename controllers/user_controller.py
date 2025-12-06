@@ -4,11 +4,12 @@ from utils.jsondb import JsonDB
 from datetime import datetime
 from models.user import ProfileSummary, UserUpdateRequest, UserResponse
 from typing import List
-users_db = JsonDB("db/collection_users.json")
-groups_db = JsonDB("db/collection_groups.json")
-group_members_db = JsonDB("db/collection_group_members.json")
-tasks_db = JsonDB("db/collection_tasks.json")
-attachments_db = JsonDB("db/collection_task_attachments.json")
+from config.database import get_collection
+users_db = get_collection("collection_users")
+groups_db = get_collection("collection_groups")
+group_members_db = get_collection("collection_group_members")
+tasks_db = get_collection("collection_tasks")
+attachments_db = get_collection("collection_task_attachments")
 
 def get_user(wallet_address: str) -> UserResponse:
     user = users_db.find_one("wallet_address", wallet_address)

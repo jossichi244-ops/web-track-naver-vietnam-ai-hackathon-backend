@@ -5,9 +5,10 @@ from fastapi import HTTPException
 from utils.jsondb import JsonDB
 from typing import Optional 
 from typing import Optional, List
+from config.database import get_collection
 
-groups_db = JsonDB("db/collection_groups.json")
-group_members_db = JsonDB("db/collection_group_members.json")
+groups_db = get_collection("collection_groups")
+group_members_db = get_collection("collection_group_members")
 
 def _format_datetime(dt: datetime) -> str:
     if dt.tzinfo is None:

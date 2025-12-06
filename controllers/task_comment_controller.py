@@ -2,12 +2,11 @@ import uuid
 from datetime import datetime
 from fastapi import HTTPException, Request
 from utils.jsondb import JsonDB
-
-tasks_db = JsonDB("db/collection_tasks.json")
-comments_db = JsonDB("db/collection_task_comments.json")
-group_members_db = JsonDB("db/collection_group_members.json")
-audit_logs_db = JsonDB("db/collection_audit_logs.json")
-
+from config.database import get_collection
+tasks_db = get_collection("collection_tasks")
+comments_db = get_collection("collection_task_comments")
+group_members_db = get_collection("collection_group_members")
+audit_logs_db = get_collection("collection_audit_logs")
 
 def _format_datetime(dt: datetime) -> str:
     if dt.tzinfo is None:

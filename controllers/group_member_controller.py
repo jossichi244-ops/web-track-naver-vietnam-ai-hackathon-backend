@@ -4,6 +4,7 @@ from datetime import datetime
 from fastapi import HTTPException, Request
 from utils.jsondb import JsonDB
 from controllers.group_controller import get_group
+from config.database import get_collection
 # from utils import _format_datetime, _get_permissions
 import logging
 logger = logging.getLogger(__name__)
@@ -13,7 +14,7 @@ formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-members_db = JsonDB("db/collection_group_members.json")
+members_db = get_collection("collection_group_members")
 
 def _format_datetime(dt: datetime) -> str:
     if dt.tzinfo is None:
