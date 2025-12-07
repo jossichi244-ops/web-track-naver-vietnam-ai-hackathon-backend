@@ -1,2 +1,9 @@
 db
 .env
+.gitignore
+__pycache__/
+*.pyc
+instance/
+venv/
+.DS_Store
+.env
